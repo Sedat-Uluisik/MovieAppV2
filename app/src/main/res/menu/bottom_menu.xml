@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:id="@+id/movieListFragment"
+        android:title="@string/home"
+        android:icon="@drawable/ic_home_24"/>
+
+    <item android:id="@+id/searchFragment"
+        android:title="@string/search"
+        android:icon="@drawable/ic_search_24"/>
+
+    <item android:id="@+id/trendFragment"
+        android:title="@string/trending"
+        android:icon="@drawable/ic_trend_24"/>
+
+    <item android:id="@+id/savedFragment"
+        android:title="@string/favourites"
+        android:icon="@drawable/ic_favorite_24"/>
+
+
+</menu>
