@@ -1,7 +1,16 @@
 package com.sedat.movieappv2.di
 
 
+import android.app.Application
+import androidx.paging.ExperimentalPagingApi
+import androidx.room.Room
+import com.sedat.movieappv2.BuildConfig
+import com.sedat.movieappv2.data.local.AppDatabase
 import com.sedat.movieappv2.data.remote.MovieAppService
+import com.sedat.movieappv2.data.repository.MovieRepositoryImpl
+import com.sedat.movieappv2.domain.repository.MovieRepository
+import com.sedat.movieappv2.domain.usecase.GetLanguages
+import com.sedat.movieappv2.domain.usecase.GetMovieList
 import com.sedat.movieappv2.util.Constants
 import dagger.Module
 import dagger.Provides
@@ -25,8 +34,8 @@ object Module {
             readTimeout(30, TimeUnit.SECONDS)
             addNetworkInterceptor(
                 HttpLoggingInterceptor().apply {
-                    //level =
-                        //if (BuildConfig.DEBUG) HttpLoggingInterceptor.Level.BODY else HttpLoggingInterceptor.Level.NONE
+                    level =
+                        if (BuildConfig.DEBUG) HttpLoggingInterceptor.Level.BODY else HttpLoggingInterceptor.Level.NONE
                 }
             )
         }.build()
@@ -41,4 +50,35 @@ object Module {
             .build()
             .create(MovieAppService::class.java)
 
+    @Singleton
+    @Provides
+    fun provideMovieAppDatabase(
+        app: Application
+    ): AppDatabase =
+        Room.databaseBuilder(
+            app,
+            AppDatabase::class.java,
+            "movieappdb"
+        ).fallbackToDestructiveMigration()
+            .build()
+
+    @Singleton
+    @Provides
+    @ExperimentalPagingApi
+    fun provideMovieRepository(
+        service: MovieAppService
+    ): MovieRepository = MovieRepositoryImpl(service)
+
+    @Singleton
+    @Provides
+    fun provideGetMovieListUseCase(
+        movieRepository: MovieRepository
+    ): GetMovieList = GetMovieList(movieRepository)
+
+
+    @Singleton
+    @Provides
+    fun provideGetLanguagesUseCase(
+        movieRepository: MovieRepository
+    ): GetLanguages = GetLanguages(movieRepository)
 }

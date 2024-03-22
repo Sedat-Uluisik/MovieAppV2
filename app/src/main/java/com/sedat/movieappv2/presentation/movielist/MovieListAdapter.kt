@@ -5,6 +5,7 @@ import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.sedat.movieappv2.data.remote.model.Result
 import com.sedat.movieappv2.databinding.MovieListItemBinding
 
 class MovieListAdapter : PagingDataAdapter<com.sedat.movieappv2.data.remote.model.Result, MovieListAdapter.Holder>(MovieDiffUtil()) {
@@ -25,17 +26,13 @@ class MovieListAdapter : PagingDataAdapter<com.sedat.movieappv2.data.remote.mode
     }
 
     override fun onBindViewHolder(holder: MovieListAdapter.Holder, position: Int) {
-        val movie = getItem(position)!!
+        val result = getItem(position)!!
 
-        holder.item.apply {
-            movieName.text = "--> ${movie.title}"
-            releaseDate.text = ": ${movie.releaseDate}"
-            voteAvarage.text = "IMDB: ${movie.voteAverage}"
-            //glide.load("https://image.tmdb.org/t/p/w500${movie.posterPath}").into(movieImage)
-        }
+        holder.bind(result)
+
         holder.itemView.setOnClickListener {
             onItemClickListener?.let {
-                it(movie.id)
+                it(result.id)
             }
         }
     }
@@ -45,7 +42,12 @@ class MovieListAdapter : PagingDataAdapter<com.sedat.movieappv2.data.remote.mode
         return Holder(binding)
     }
 
-    class Holder(val item: MovieListItemBinding): RecyclerView.ViewHolder(item.root){
-
+    class Holder(val binding: MovieListItemBinding): RecyclerView.ViewHolder(binding.root){
+        fun bind(result: Result){
+            binding.apply {
+                movie = result
+                executePendingBindings()
+            }
+        }
     }
 }

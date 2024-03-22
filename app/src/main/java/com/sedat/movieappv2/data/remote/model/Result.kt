@@ -25,4 +25,6 @@ data class Result(
     val voteAverage: Float,
     @SerializedName("vote_count")
     val voteCount: Int
-)
+){
+    fun getImageUrl() = "https://image.tmdb.org/t/p/w500${posterPath}"
+}

@@ -4,6 +4,7 @@ plugins {
     id("androidx.navigation.safeargs.kotlin")
     id("com.google.dagger.hilt.android")
     id ("com.google.devtools.ksp")
+    id("kotlin-kapt")
 }
 
 android {
@@ -44,6 +45,8 @@ android {
     buildFeatures {
         viewBinding = true
         dataBinding = true
+
+        buildConfig = true
     }
 }
 
@@ -70,6 +73,7 @@ dependencies {
     implementation ("androidx.room:room-runtime:2.6.1")
     ksp("androidx.room:room-compiler:2.6.1")
     implementation("androidx.room:room-ktx:2.6.1")
+    implementation("androidx.room:room-paging:2.6.1")
 
     ksp("org.jetbrains.kotlinx:kotlinx-metadata-jvm:0.5.0")
     implementation ("com.google.code.gson:gson:2.10.1")
