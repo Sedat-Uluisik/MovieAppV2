@@ -10,4 +10,5 @@ import retrofit2.Response
 interface MovieRepository {
     suspend fun getMovies(page: Int): Resource<Movie>
     suspend fun getLanguages(): Resource<List<LanguageItem>>
+    suspend fun searchMovie(query: String): Resource<Movie>
 }

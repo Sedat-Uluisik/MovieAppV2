@@ -11,6 +11,7 @@ import com.sedat.movieappv2.data.repository.MovieRepositoryImpl
 import com.sedat.movieappv2.domain.repository.MovieRepository
 import com.sedat.movieappv2.domain.usecase.GetLanguages
 import com.sedat.movieappv2.domain.usecase.GetMovieList
+import com.sedat.movieappv2.domain.usecase.SearchMovie
 import com.sedat.movieappv2.util.Constants
 import dagger.Module
 import dagger.Provides
@@ -81,4 +82,10 @@ object Module {
     fun provideGetLanguagesUseCase(
         movieRepository: MovieRepository
     ): GetLanguages = GetLanguages(movieRepository)
+
+    @Singleton
+    @Provides
+    fun provideSearchMovieUseCase(
+        movieRepository: MovieRepository
+    ): SearchMovie = SearchMovie(movieRepository)
 }

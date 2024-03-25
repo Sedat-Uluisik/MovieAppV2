@@ -8,14 +8,14 @@ import androidx.recyclerview.widget.RecyclerView
 import com.sedat.movieappv2.data.remote.model.Result
 import com.sedat.movieappv2.databinding.MovieListItemBinding
 
-class MovieListAdapter : PagingDataAdapter<com.sedat.movieappv2.data.remote.model.Result, MovieListAdapter.Holder>(MovieDiffUtil()) {
+class MovieListAdapter : PagingDataAdapter<Result, MovieListAdapter.Holder>(MovieDiffUtil()) {
 
-    class MovieDiffUtil: DiffUtil.ItemCallback<com.sedat.movieappv2.data.remote.model.Result>(){
-        override fun areItemsTheSame(oldItem: com.sedat.movieappv2.data.remote.model.Result, newItem: com.sedat.movieappv2.data.remote.model.Result): Boolean {
+    class MovieDiffUtil: DiffUtil.ItemCallback<Result>(){
+        override fun areItemsTheSame(oldItem: Result, newItem: Result): Boolean {
             return oldItem == newItem
         }
 
-        override fun areContentsTheSame(oldItem: com.sedat.movieappv2.data.remote.model.Result, newItem: com.sedat.movieappv2.data.remote.model.Result): Boolean {
+        override fun areContentsTheSame(oldItem: Result, newItem: Result): Boolean {
             return oldItem == newItem
         }
     }
@@ -25,7 +25,7 @@ class MovieListAdapter : PagingDataAdapter<com.sedat.movieappv2.data.remote.mode
         onItemClickListener = listener
     }
 
-    override fun onBindViewHolder(holder: MovieListAdapter.Holder, position: Int) {
+    override fun onBindViewHolder(holder: Holder, position: Int) {
         val result = getItem(position)!!
 
         holder.bind(result)
@@ -42,7 +42,7 @@ class MovieListAdapter : PagingDataAdapter<com.sedat.movieappv2.data.remote.mode
         return Holder(binding)
     }
 
-    class Holder(val binding: MovieListItemBinding): RecyclerView.ViewHolder(binding.root){
+    class Holder(private val binding: MovieListItemBinding): RecyclerView.ViewHolder(binding.root){
         fun bind(result: Result){
             binding.apply {
                 movie = result

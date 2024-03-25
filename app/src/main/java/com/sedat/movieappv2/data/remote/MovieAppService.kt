@@ -19,4 +19,11 @@ interface MovieAppService {
     suspend fun getLanguages(
         @Query("api_key") apiKey: String = API_KEY
     ): Response<List<LanguageItem>>
+
+    @GET("/3/search/movie")
+    suspend fun searchMovie(
+        @Query("query") query: String,
+        @Query("language") language: String,
+        @Query("api_key") apiKey: String = API_KEY
+    ):Response<Movie>
 }
