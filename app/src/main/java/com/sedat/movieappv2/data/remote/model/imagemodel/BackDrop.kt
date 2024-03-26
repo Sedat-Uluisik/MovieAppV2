@@ -15,4 +15,6 @@ data class Backdrop(
     @SerializedName("vote_count")
     val voteCount: Int,
     val width: Int
-)
+){
+    fun getImageUrl() = "https://image.tmdb.org/t/p/w500${filePath}"
+}

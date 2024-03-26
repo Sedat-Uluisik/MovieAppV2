@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.paging.PagingData
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.sedat.movieappv2.R
@@ -32,6 +33,14 @@ class MovieListFragment : Fragment(R.layout.fragment_movie_list) {
 
         setupCharacterRecyclerView()
         collectFromViewModel()
+        itemListeners()
+    }
+
+    private fun itemListeners(){
+        movieListAdapter.setOnItemClickListener {
+            val action = MovieListFragmentDirections.actionMovieListFragmentToMovieDetailsFragment(movieid = it)
+            findNavController().navigate(action)
+        }
     }
 
     private fun collectFromViewModel(){

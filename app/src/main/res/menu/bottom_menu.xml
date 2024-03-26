@@ -9,7 +9,7 @@
         android:title="@string/search"
         android:icon="@drawable/ic_search_24"/>
 
-    <item android:id="@+id/trendFragment"
+    <item android:id="@+id/movieTrendFragment"
         android:title="@string/trending"
         android:icon="@drawable/ic_trend_24"/>
 
