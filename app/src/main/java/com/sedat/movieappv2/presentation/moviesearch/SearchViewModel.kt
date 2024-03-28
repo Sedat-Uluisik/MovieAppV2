@@ -3,7 +3,7 @@ package com.sedat.movieappv2.presentation.moviesearch
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.sedat.movieappv2.data.remote.model.Movie
-import com.sedat.movieappv2.domain.usecase.SearchMovie
+import com.sedat.movieappv2.domain.usecase.remote.SearchMovie
 import com.sedat.movieappv2.util.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers

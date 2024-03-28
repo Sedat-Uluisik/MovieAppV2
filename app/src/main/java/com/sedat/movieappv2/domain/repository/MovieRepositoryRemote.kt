@@ -7,10 +7,10 @@ import com.sedat.movieappv2.data.remote.model.Result
 import com.sedat.movieappv2.data.remote.model.imagemodel.MovieImages
 import com.sedat.movieappv2.util.Resource
 import kotlinx.coroutines.flow.Flow
-import retrofit2.Response
 
-interface MovieRepository {
-    suspend fun getMovies(page: Int): Resource<Movie>
+interface MovieRepositoryRemote {
+
+    fun getMovies(): Flow<PagingData<Result>>
     suspend fun getLanguages(): Resource<List<LanguageItem>>
     suspend fun searchMovie(query: String): Resource<Movie>
     suspend fun getTrendMovies(time: String, page: Int): Resource<Movie>

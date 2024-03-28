@@ -7,14 +7,10 @@ import androidx.room.Room
 import com.sedat.movieappv2.BuildConfig
 import com.sedat.movieappv2.data.local.AppDatabase
 import com.sedat.movieappv2.data.remote.MovieAppService
-import com.sedat.movieappv2.data.repository.MovieRepositoryImpl
-import com.sedat.movieappv2.domain.repository.MovieRepository
-import com.sedat.movieappv2.domain.usecase.GetLanguages
-import com.sedat.movieappv2.domain.usecase.GetMovieImages
-import com.sedat.movieappv2.domain.usecase.GetMovieList
-import com.sedat.movieappv2.domain.usecase.GetMovieWithID
-import com.sedat.movieappv2.domain.usecase.GetTrendMovies
-import com.sedat.movieappv2.domain.usecase.SearchMovie
+import com.sedat.movieappv2.data.repository.MovieRepositoryLocalImpl
+import com.sedat.movieappv2.data.repository.MovieRepositoryRemoteImpl
+import com.sedat.movieappv2.domain.repository.MovieRepositoryLocal
+import com.sedat.movieappv2.domain.repository.MovieRepositoryRemote
 import com.sedat.movieappv2.util.Constants
 import dagger.Module
 import dagger.Provides
@@ -69,44 +65,15 @@ object Module {
     @Singleton
     @Provides
     @ExperimentalPagingApi
-    fun provideMovieRepository(
-        service: MovieAppService
-    ): MovieRepository = MovieRepositoryImpl(service)
+    fun provideMovieRepositoryRemote(
+        service: MovieAppService,
+        db: AppDatabase
+    ): MovieRepositoryRemote = MovieRepositoryRemoteImpl(service, db)
 
     @Singleton
     @Provides
-    fun provideGetMovieListUseCase(
-        movieRepository: MovieRepository
-    ): GetMovieList = GetMovieList(movieRepository)
+    fun provideMovieRepositoryLocal(
+        db: AppDatabase
+    ): MovieRepositoryLocal = MovieRepositoryLocalImpl(db)
 
-
-    @Singleton
-    @Provides
-    fun provideGetLanguagesUseCase(
-        movieRepository: MovieRepository
-    ): GetLanguages = GetLanguages(movieRepository)
-
-    @Singleton
-    @Provides
-    fun provideSearchMovieUseCase(
-        movieRepository: MovieRepository
-    ): SearchMovie = SearchMovie(movieRepository)
-
-    @Singleton
-    @Provides
-    fun provideTrendMovieUseCase(
-        movieRepository: MovieRepository
-    ): GetTrendMovies = GetTrendMovies(movieRepository)
-
-    @Singleton
-    @Provides
-    fun provideMovieWithIDUseCase(
-        movieRepository: MovieRepository
-    ): GetMovieWithID = GetMovieWithID(movieRepository)
-
-    @Singleton
-    @Provides
-    fun provideMovieImagesUseCase(
-        movieRepository: MovieRepository
-    ): GetMovieImages = GetMovieImages(movieRepository)
 }

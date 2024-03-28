@@ -7,13 +7,15 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.paging.PagingData
 import com.sedat.movieappv2.R
+import com.sedat.movieappv2.data.remote.model.Result
 import com.sedat.movieappv2.databinding.FragmentMovieDetailsBinding
+import com.sedat.movieappv2.interfaces.FavouriteBtnClickListener
 import com.sedat.movieappv2.util.hide
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class MovieDetailsFragment : Fragment(R.layout.fragment_movie_details) {
+class MovieDetailsFragment : Fragment(R.layout.fragment_movie_details), FavouriteBtnClickListener {
 
     private lateinit var binding: FragmentMovieDetailsBinding
 
@@ -25,6 +27,7 @@ class MovieDetailsFragment : Fragment(R.layout.fragment_movie_details) {
         super.onViewCreated(view, savedInstanceState)
 
         binding = FragmentMovieDetailsBinding.bind(view)
+        binding.clickListener = this
         setupCharacterRecyclerView()
         collectFromViewModel()
 
@@ -58,6 +61,10 @@ class MovieDetailsFragment : Fragment(R.layout.fragment_movie_details) {
                 }
             }
         }
+    }
+
+    override fun onFavouriteBtnClick(view: View, movie: Result) {
+        viewModel.saveFavourite(movie)
     }
 
 }

@@ -3,7 +3,7 @@ package com.sedat.movieappv2.presentation.movietrend
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.sedat.movieappv2.data.remote.model.Movie
-import com.sedat.movieappv2.domain.usecase.GetTrendMovies
+import com.sedat.movieappv2.domain.usecase.remote.GetTrendMovies
 import com.sedat.movieappv2.util.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers

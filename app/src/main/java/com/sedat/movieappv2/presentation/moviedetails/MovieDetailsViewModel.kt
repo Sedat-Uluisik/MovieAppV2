@@ -2,11 +2,11 @@ package com.sedat.movieappv2.presentation.moviedetails
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.sedat.movieappv2.data.remote.model.Movie
 import com.sedat.movieappv2.data.remote.model.Result
 import com.sedat.movieappv2.data.remote.model.imagemodel.MovieImages
-import com.sedat.movieappv2.domain.usecase.GetMovieImages
-import com.sedat.movieappv2.domain.usecase.GetMovieWithID
+import com.sedat.movieappv2.domain.usecase.local.SaveFavourite
+import com.sedat.movieappv2.domain.usecase.remote.GetMovieImages
+import com.sedat.movieappv2.domain.usecase.remote.GetMovieWithID
 import com.sedat.movieappv2.util.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -18,7 +18,8 @@ import javax.inject.Inject
 @HiltViewModel
 class MovieDetailsViewModel @Inject constructor(
     private val getMovieWithIDUseCase: GetMovieWithID,
-    private val getMovieImagesUseCase: GetMovieImages
+    private val getMovieImagesUseCase: GetMovieImages,
+    private val saveFavouriteUseCase: SaveFavourite
 ): ViewModel() {
 
     private var _movie: MutableStateFlow<Resource<Result>> = MutableStateFlow(Resource.loading(null))
@@ -37,6 +38,10 @@ class MovieDetailsViewModel @Inject constructor(
         getMovieImagesUseCase.invoke(movieId).data?.let {
             _movieImages.emit(Resource.success(it))
         }
+    }
+
+    fun saveFavourite(result: Result) = viewModelScope.launch(Dispatchers.IO){
+        saveFavouriteUseCase.invoke(result.toMovieEntity())
     }
 
 }

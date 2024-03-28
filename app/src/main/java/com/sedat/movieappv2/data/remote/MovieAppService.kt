@@ -16,7 +16,7 @@ interface MovieAppService {
         @Query("page") page: Int,
         @Query("language") language: String,
         @Query("api_key") apiKey: String = API_KEY
-    ): Response<Movie>
+    ): Movie
 
     @GET("/3/configuration/languages")
     suspend fun getLanguages(

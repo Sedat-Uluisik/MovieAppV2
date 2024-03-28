@@ -44,4 +44,13 @@
             android:defaultValue="-1" />
 
     </fragment>
+    <fragment
+        android:id="@+id/movieFavouritesFragment"
+        android:name="com.sedat.movieappv2.presentation.moviefavourites.MovieFavouritesFragment"
+        android:label="fragment_movie_favourites"
+        tools:layout="@layout/fragment_movie_favourites" >
+        <action
+            android:id="@+id/action_movieFavouritesFragment_to_movieDetailsFragment"
+            app:destination="@id/movieDetailsFragment" />
+    </fragment>
 </navigation>

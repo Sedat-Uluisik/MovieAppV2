@@ -15,6 +15,7 @@ import com.sedat.movieappv2.R
 import com.sedat.movieappv2.databinding.FragmentMovieListBinding
 import com.sedat.movieappv2.util.hide
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
@@ -46,8 +47,8 @@ class MovieListFragment : Fragment(R.layout.fragment_movie_list) {
     private fun collectFromViewModel(){
         lifecycleScope.launch {
             launch {
-                movieListViewModel.movies.collect{
-                    movieListAdapter.submitData(PagingData.from(it.data?.results ?: listOf()))
+                movieListViewModel.movieList.collectLatest{
+                    movieListAdapter.submitData(it)
                     binding.progressBar.hide()
                 }
             }

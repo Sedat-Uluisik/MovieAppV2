@@ -1,6 +1,7 @@
 package com.sedat.movieappv2.data.remote.model
 
 import com.google.gson.annotations.SerializedName
+import com.sedat.movieappv2.data.local.entity.MovieEntity
 
 data class Result(
     val adult: Boolean,
@@ -27,4 +28,14 @@ data class Result(
     val voteCount: Int
 ){
     fun getImageUrl() = "https://image.tmdb.org/t/p/w500${posterPath}"
+
+    fun toMovieEntity() = MovieEntity(
+        movieId = id,
+        url = getImageUrl(),
+        title = title,
+        releaseDate = releaseDate,
+        imdb = voteAverage,
+        isFavourite = false,
+        createdAt = System.currentTimeMillis()
+    )
 }
