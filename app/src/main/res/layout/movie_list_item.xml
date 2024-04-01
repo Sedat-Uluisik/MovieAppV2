@@ -7,6 +7,10 @@
         <variable
             name="movie"
             type="com.sedat.movieappv2.data.remote.model.Result" />
+
+        <variable
+            name="item_click"
+            type="com.sedat.movieappv2.interfaces.MovieItemClickListener" />
     </data>
 
     <LinearLayout
@@ -15,7 +19,8 @@
         android:layout_margin="5dp"
         android:id="@+id/root_layout"
         android:background="@drawable/recycler_item_background"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:onClick="@{(view)->item_click.onItemClick(view, movie.id)}">
 
         <ImageView
             android:id="@+id/movie_image"

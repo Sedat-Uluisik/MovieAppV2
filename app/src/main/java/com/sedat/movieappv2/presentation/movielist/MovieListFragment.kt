@@ -34,14 +34,6 @@ class MovieListFragment : Fragment(R.layout.fragment_movie_list) {
 
         setupCharacterRecyclerView()
         collectFromViewModel()
-        itemListeners()
-    }
-
-    private fun itemListeners(){
-        movieListAdapter.setOnItemClickListener {
-            val action = MovieListFragmentDirections.actionMovieListFragmentToMovieDetailsFragment(movieid = it)
-            findNavController().navigate(action)
-        }
     }
 
     private fun collectFromViewModel(){

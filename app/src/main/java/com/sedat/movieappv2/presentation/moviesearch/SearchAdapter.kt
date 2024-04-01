@@ -3,14 +3,16 @@ package com.sedat.movieappv2.presentation.moviesearch
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.sedat.movieappv2.data.remote.model.*
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.sedat.movieappv2.data.remote.model.Result
 import com.sedat.movieappv2.databinding.ItemLayoutSearchBinding
-import com.sedat.movieappv2.interfaces.SearchItemClickListener
+import com.sedat.movieappv2.interfaces.MovieItemClickListener
 
-class SearchAdapter: ListAdapter<Result, SearchAdapter.Holder>(SearchDiffUtil()), SearchItemClickListener {
+class SearchAdapter: ListAdapter<Result, SearchAdapter.Holder>(SearchDiffUtil()),
+    MovieItemClickListener {
 
     class SearchDiffUtil : DiffUtil.ItemCallback<Result>(){
         override fun areItemsTheSame(oldItem: Result, newItem: Result): Boolean {
@@ -40,9 +42,9 @@ class SearchAdapter: ListAdapter<Result, SearchAdapter.Holder>(SearchDiffUtil())
         }
     }
 
-    override fun onSearchItemClick(view: View, movieId: Int) {
-        //val action = SearchFragmentDirections.actionSearchFragmentToDetailsFragment(movie_id)
-        //view.findNavController().navigate(action)
+    override fun onItemClick(view: View, movieId: Int) {
+        val action = SearchFragmentDirections.actionSearchFragmentToMovieDetailsFragment(movieid = movieId)
+        view.findNavController().navigate(action)
     }
 
 }

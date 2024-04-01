@@ -30,7 +30,14 @@ class MovieTrendFragment : Fragment(R.layout.fragment_movie_trend) {
         setupCharacterRecyclerView()
         collectFromViewModel()
 
-        viewModel.getTrendMovies("day") //day or week
+        viewModel.getTrendMovies("day")
+
+        binding.btnSwitch.setOnCheckedChangeListener { buttonView, isChecked ->
+            if(isChecked)
+                viewModel.getTrendMovies("day")
+            else
+                viewModel.getTrendMovies("week")
+        }
     }
 
     private fun setupCharacterRecyclerView() {

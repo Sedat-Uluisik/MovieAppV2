@@ -25,8 +25,6 @@ class MovieListViewModel @Inject constructor(
     private val getMovieListUseCase: GetMovieList,
     private val getLanguagesUseCase: GetLanguages
 ): ViewModel() {
-    /*private var _movies = MutableSharedFlow<PagingData<Result>>()
-    var movies = _movies.asSharedFlow()*/
 
     private val _movieList = MutableSharedFlow<PagingData<Result>>()
     val movieList = _movieList.asSharedFlow()

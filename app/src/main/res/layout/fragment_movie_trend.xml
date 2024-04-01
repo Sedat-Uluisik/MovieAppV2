@@ -23,6 +23,37 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/trending_text"
+        app:layout_constraintBottom_toBottomOf="@id/trending_text"
+        app:layout_constraintStart_toEndOf="@id/trending_text">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/day"
+            android:textColor="@android:color/white"/>
+
+        <androidx.appcompat.widget.SwitchCompat
+            android:id="@+id/btn_switch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:ignore="UseSwitchCompatOrMaterialXml"
+            app:trackTint="@color/switch_track_selector"
+            app:thumbTint="@color/switch_thumb_selector"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/week"
+            android:textColor="@android:color/white"/>
+
+    </LinearLayout>
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_trending"
         android:layout_width="0dp"
