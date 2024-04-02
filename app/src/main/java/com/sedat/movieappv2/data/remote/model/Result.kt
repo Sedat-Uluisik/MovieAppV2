@@ -29,13 +29,13 @@ data class Result(
 ){
     fun getImageUrl() = "https://image.tmdb.org/t/p/w500${posterPath}"
 
-    fun toMovieEntity() = MovieEntity(
+    fun toMovieEntity(isFavorite: Boolean = false) = MovieEntity(
         movieId = id,
         url = getImageUrl(),
         title = title,
         releaseDate = releaseDate,
         imdb = voteAverage,
-        isFavourite = false,
+        isFavourite = isFavorite,
         createdAt = System.currentTimeMillis()
     )
 }

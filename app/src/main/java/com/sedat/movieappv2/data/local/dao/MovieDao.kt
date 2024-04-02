@@ -14,11 +14,11 @@ interface MovieDao {
     @Query("SELECT * FROM FAVOURITES WHERE movieId IN (SELECT movieId FROM FAVOURITES ORDER BY RANDOM() LIMIT :size) AND isFavourite = 1")
     fun getFavourites(size: Int): List<MovieEntity>
 
-    @Query("SELECT * FROM FAVOURITES WHERE isFavourite = 0 ORDER BY createdAt ASC")
+    @Query("SELECT * FROM FAVOURITES ORDER BY createdAt, releaseDate DESC")
     fun getMovies(): PagingSource<Int, MovieEntity>
 
     @Query("SELECT * FROM FAVOURITES WHERE movieId = :id AND isFavourite = 1")
-    suspend fun getFavouriteWithId(id: Int): MovieEntity
+    suspend fun getFavouriteWithId(id: Int): MovieEntity?
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun saveFavourite(movieEntity: MovieEntity)

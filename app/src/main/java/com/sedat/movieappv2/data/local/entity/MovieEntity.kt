@@ -6,7 +6,8 @@ import com.sedat.movieappv2.data.remote.model.Result
 
 @Entity(tableName = "FAVOURITES")
 data class MovieEntity(
-    @PrimaryKey(autoGenerate = false)
+    @PrimaryKey(autoGenerate = true)
+    val id: Int = 0,
     val movieId: Int,
     val url: String,
     val title: String,

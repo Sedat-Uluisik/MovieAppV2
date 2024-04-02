@@ -23,7 +23,7 @@ class MovieRepositoryLocalImpl(
         db.movieDao.deleteFavouriteWithId(id)
     }
 
-    override suspend fun getFavouriteWithId(id: Int): MovieEntity {
+    override suspend fun getFavouriteWithId(id: Int): MovieEntity? {
         return db.movieDao.getFavouriteWithId(id)
     }
 

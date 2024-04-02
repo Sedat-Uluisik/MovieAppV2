@@ -31,6 +31,7 @@ class MovieFavouritesFragment : Fragment(R.layout.fragment_movie_favourites) {
         itemListeners()
         collectFromViewModel()
         setupCharacterRecyclerView()
+        viewModel.getFavourites()
     }
 
     private fun setupCharacterRecyclerView() {

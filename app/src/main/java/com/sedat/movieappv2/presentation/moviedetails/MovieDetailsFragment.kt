@@ -35,6 +35,7 @@ class MovieDetailsFragment : Fragment(R.layout.fragment_movie_details), Favourit
             val movieId = MovieDetailsFragmentArgs.fromBundle(it).movieid
             viewModel.getMovieWithID(movieId)
             viewModel.getMovieImages(movieId)
+            viewModel.checkFavorite(movieId)
         }
     }
 
@@ -58,6 +59,12 @@ class MovieDetailsFragment : Fragment(R.layout.fragment_movie_details), Favourit
             launch {
                 viewModel.movieImages.collect{
                     adapterMovieImages.submitList(it.data?.backdrops ?: listOf())
+                }
+            }
+
+            launch {
+                viewModel.isFavorite.collect{
+                    binding.isFavorite = it
                 }
             }
         }

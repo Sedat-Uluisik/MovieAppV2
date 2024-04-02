@@ -7,5 +7,5 @@ interface MovieRepositoryLocal {
     suspend fun saveFavourite(movieEntity: MovieEntity)
     suspend fun deleteFavourite(movieEntity: MovieEntity)
     suspend fun deleteFavouriteWithId(id: Int)
-    suspend fun getFavouriteWithId(id: Int): MovieEntity
+    suspend fun getFavouriteWithId(id: Int): MovieEntity?
 }

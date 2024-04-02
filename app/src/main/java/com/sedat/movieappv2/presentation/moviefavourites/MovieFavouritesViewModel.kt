@@ -17,14 +17,10 @@ class MovieFavouritesViewModel @Inject constructor(
     private val getFavouritesUseCase: GetFavourites
 ): ViewModel() {
 
-    init {
-        getFavourites()
-    }
-
     private var _movieList: MutableStateFlow<Resource<List<MovieEntity>>> = MutableStateFlow(Resource.loading(null))
     var movieList = _movieList.asStateFlow()
 
     fun getFavourites() = viewModelScope.launch(Dispatchers.IO) {
-        _movieList.emit(Resource.success(getFavouritesUseCase.invoke(10)))
+        _movieList.emit(Resource.success(getFavouritesUseCase.invoke(50)))
     }
 }

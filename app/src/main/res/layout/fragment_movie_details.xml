@@ -11,6 +11,9 @@ xmlns:tools="http://schemas.android.com/tools">
     <variable
         name="clickListener"
         type="com.sedat.movieappv2.interfaces.FavouriteBtnClickListener" />
+    <variable
+        name="isFavorite"
+        type="Boolean" />
 </data>
 
 <androidx.constraintlayout.motion.widget.MotionLayout
@@ -41,6 +44,7 @@ xmlns:tools="http://schemas.android.com/tools">
             android:src="@drawable/ic_favorite_border_32"
             android:layout_gravity="end"
             android:layout_margin="10dp"
+            isFavorite="@{isFavorite}"
             android:onClick="@{(v)-> clickListener.onFavouriteBtnClick(v, movie)}"/>
 
         <ImageView
