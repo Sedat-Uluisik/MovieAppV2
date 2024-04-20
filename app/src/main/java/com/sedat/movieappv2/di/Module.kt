@@ -2,6 +2,7 @@ package com.sedat.movieappv2.di
 
 
 import android.app.Application
+import android.content.Context
 import androidx.paging.ExperimentalPagingApi
 import androidx.room.Room
 import com.sedat.movieappv2.BuildConfig
@@ -12,9 +13,11 @@ import com.sedat.movieappv2.data.repository.MovieRepositoryRemoteImpl
 import com.sedat.movieappv2.domain.repository.MovieRepositoryLocal
 import com.sedat.movieappv2.domain.repository.MovieRepositoryRemote
 import com.sedat.movieappv2.util.Constants
+import com.sedat.movieappv2.util.SharedPrefsLanguage
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -64,11 +67,16 @@ object Module {
 
     @Singleton
     @Provides
+    fun provideSharedPrefsLanguage(@ApplicationContext context: Context) = SharedPrefsLanguage(context)
+
+    @Singleton
+    @Provides
     @ExperimentalPagingApi
     fun provideMovieRepositoryRemote(
         service: MovieAppService,
-        db: AppDatabase
-    ): MovieRepositoryRemote = MovieRepositoryRemoteImpl(service, db)
+        db: AppDatabase,
+        sharedPrefsLanguage: SharedPrefsLanguage
+    ): MovieRepositoryRemote = MovieRepositoryRemoteImpl(service, db, sharedPrefsLanguage)
 
     @Singleton
     @Provides

@@ -14,12 +14,14 @@ import com.sedat.movieappv2.data.remote.model.Result
 import com.sedat.movieappv2.data.remote.model.imagemodel.MovieImages
 import com.sedat.movieappv2.domain.repository.MovieRepositoryRemote
 import com.sedat.movieappv2.util.Resource
+import com.sedat.movieappv2.util.SharedPrefsLanguage
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
 class MovieRepositoryRemoteImpl(
     private val movieAppService: MovieAppService,
-    private val db: AppDatabase
+    private val db: AppDatabase,
+    private val sharedPrefsLanguage: SharedPrefsLanguage
 ): MovieRepositoryRemote {
     @OptIn(ExperimentalPagingApi::class)
     override fun getMovies(): Flow<PagingData<Result>> {
@@ -35,7 +37,8 @@ class MovieRepositoryRemoteImpl(
             ),
             remoteMediator = MovieRemoteMediator(
                 movieAppService,
-                db
+                db,
+                sharedPrefsLanguage
             ),
             pagingSourceFactory = pagingSourceFactory
         ).flow.map { movieEntityPagingData ->
@@ -61,7 +64,8 @@ class MovieRepositoryRemoteImpl(
 
     override suspend fun searchMovie(query: String): Resource<Movie> {
         return try {
-            val response = movieAppService.searchMovie(query, "en")
+            val language = sharedPrefsLanguage.getLanguage()
+            val response = movieAppService.searchMovie(query, language)
             if(response.isSuccessful){
                 response.body()?.let {
                     return@let Resource.success(it)
@@ -75,7 +79,8 @@ class MovieRepositoryRemoteImpl(
 
     override suspend fun getTrendMovies(time: String, page: Int): Resource<Movie> {
         return try {
-            val response = movieAppService.getTrendMovies(time, "en", "en", page)
+            val language = sharedPrefsLanguage.getLanguage()
+            val response = movieAppService.getTrendMovies(time, language, language, page)
             if(response.isSuccessful){
                 response.body()?.let {
                     return@let Resource.success(it)
@@ -89,7 +94,9 @@ class MovieRepositoryRemoteImpl(
 
     override suspend fun getMovie(movieId: Int): Resource<Result> {
         return try {
-            val response = movieAppService.getMovie(movieId, "en")
+            val language = sharedPrefsLanguage.getLanguage()
+            val response = movieAppService.getMovie(movieId, language
+            )
             if(response.isSuccessful){
                 response.body()?.let {
                     return@let Resource.success(it)

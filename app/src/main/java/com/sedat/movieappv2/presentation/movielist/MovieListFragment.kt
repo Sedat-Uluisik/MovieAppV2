@@ -13,6 +13,7 @@ import androidx.paging.PagingData
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.sedat.movieappv2.R
 import com.sedat.movieappv2.databinding.FragmentMovieListBinding
+import com.sedat.movieappv2.presentation.movielanguage.LanguageBottomSheetDialogFragment
 import com.sedat.movieappv2.util.hide
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
@@ -26,6 +27,8 @@ class MovieListFragment : Fragment(R.layout.fragment_movie_list) {
 
     private val movieListAdapter = MovieListAdapter()
 
+    private var isRefresh = false
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -34,6 +37,26 @@ class MovieListFragment : Fragment(R.layout.fragment_movie_list) {
 
         setupCharacterRecyclerView()
         collectFromViewModel()
+        itemListeners()
+    }
+
+    private fun itemListeners(){
+        binding.imgLanguage.setOnClickListener{
+            if(!isRefresh)
+                LanguageBottomSheetDialogFragment{
+                    isRefresh = true
+                    binding.imgLanguage.setImageResource(R.drawable.ic_refresh_30)
+                }.show(parentFragmentManager, "LanguageBottomSheetDialogFragment")
+            else {
+                movieListViewModel.getMovieList()
+                binding.imgLanguage.setImageResource(R.drawable.ic_language_30)
+                isRefresh = false
+            }
+        }
+
+        binding.swipeRefreshLayout.setOnRefreshListener {
+            movieListViewModel.getMovieList()
+        }
     }
 
     private fun collectFromViewModel(){
@@ -41,15 +64,7 @@ class MovieListFragment : Fragment(R.layout.fragment_movie_list) {
             launch {
                 movieListViewModel.movieList.collectLatest{
                     movieListAdapter.submitData(it)
-                    binding.progressBar.hide()
-                }
-            }
-
-            launch {
-                movieListViewModel.languages.collect{
-                    val spinnerAdapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, it.data ?: listOf())
-                    spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-                    binding.spinner.adapter = spinnerAdapter
+                    binding.swipeRefreshLayout.isRefreshing = false
                 }
             }
         }

@@ -17,37 +17,14 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <LinearLayout
+            <ImageView
+                android:id="@+id/img_language"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:gravity="center_vertical"
-                android:padding="3dp"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="center_vertical"
-                    android:text="Language: "
-                    android:textColor="@android:color/white"
-                    app:drawableStartCompat="@drawable/ic_language_24" />
-
-                <TextView
-                    android:id="@+id/language_text"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="@android:color/white"/>
-
-                <Spinner
-                    android:id="@+id/spinner"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:backgroundTint="#E3E3E3"
-                    android:layout_marginStart="3dp"/>
-
-
-            </LinearLayout>
+                android:src="@drawable/ic_language_30"
+                android:layout_gravity="end"
+                android:padding="8dp"
+                android:scaleType="centerInside" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyler_movie_list"

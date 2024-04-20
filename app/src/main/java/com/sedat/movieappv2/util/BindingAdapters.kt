@@ -4,6 +4,8 @@ import android.view.View
 import android.widget.ImageView
 import androidx.databinding.BindingAdapter
 import coil.load
+import coil.size.Precision
+import coil.size.Scale
 import com.sedat.movieappv2.R
 
 @BindingAdapter("loadImage")

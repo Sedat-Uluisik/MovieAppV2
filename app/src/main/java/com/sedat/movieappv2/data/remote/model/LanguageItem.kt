@@ -7,5 +7,6 @@ data class LanguageItem(
     val englishName: String,
     @SerializedName("iso_639_1")
     val iso6391: String,
-    val name: String
+    val name: String,
+    var isSelect: Boolean = false
 )

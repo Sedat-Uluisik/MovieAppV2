@@ -44,6 +44,10 @@ class MovieDetailsFragment : Fragment(R.layout.fragment_movie_details), Favourit
             recyclerImages.apply {
                 setHasFixedSize(true)
                 adapter = adapterMovieImages
+                set3DItem(true)
+                setAlpha(true)
+                setInfinite(false)
+                setIntervalRatio(0.4f)
             }
         }
     }

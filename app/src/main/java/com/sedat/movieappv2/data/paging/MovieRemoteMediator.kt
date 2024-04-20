@@ -9,13 +9,15 @@ import com.sedat.movieappv2.data.local.AppDatabase
 import com.sedat.movieappv2.data.local.entity.MovieEntity
 import com.sedat.movieappv2.data.local.entity.RemoteKeyEntity
 import com.sedat.movieappv2.data.remote.MovieAppService
+import com.sedat.movieappv2.util.SharedPrefsLanguage
 import retrofit2.HttpException
 import java.io.IOException
 
 @OptIn(ExperimentalPagingApi::class)
 class MovieRemoteMediator(
     private val movieAppService: MovieAppService,
-    private val db: AppDatabase
+    private val db: AppDatabase,
+    private val sharedPrefsLanguage: SharedPrefsLanguage
 ): RemoteMediator<Int, MovieEntity>() {
 
     override suspend fun initialize(): InitializeAction {
@@ -32,7 +34,8 @@ class MovieRemoteMediator(
         }
 
         try {
-            val response = movieAppService.getMovies(page, "en")
+            val language = sharedPrefsLanguage.getLanguage()
+            val response = movieAppService.getMovies(page, language)
 
             val isEndOfList = response.results.isEmpty()
 

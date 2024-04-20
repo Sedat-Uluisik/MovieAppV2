@@ -22,36 +22,20 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MovieListViewModel @Inject constructor(
-    private val getMovieListUseCase: GetMovieList,
-    private val getLanguagesUseCase: GetLanguages
+    private val getMovieListUseCase: GetMovieList
 ): ViewModel() {
 
     private val _movieList = MutableSharedFlow<PagingData<Result>>()
     val movieList = _movieList.asSharedFlow()
 
-    private var _languages: MutableStateFlow<Resource<List<String>>> = MutableStateFlow(Resource.loading(null))
-    var languages = _languages.asStateFlow()
-
     init {
         getMovieList()
-        getLanguages()
     }
 
-    private fun getMovieList(){
+    fun getMovieList(){
         getMovieListUseCase().onEach {
             _movieList.emit(it)
         }.launchIn(viewModelScope)
     }
 
-    private fun getLanguages() = viewModelScope.launch(Dispatchers.IO) {
-        getLanguagesUseCase.invoke().data?.let {
-            _languages.emit(
-                Resource.success(
-                    it.map { languageItem ->
-                        languageItem.iso6391
-                    }
-                )
-            )
-        }
-    }
 }

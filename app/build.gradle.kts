@@ -96,4 +96,7 @@ dependencies {
 
     // Paging
     implementation("androidx.paging:paging-runtime-ktx:3.2.1")
+
+    //carousel recyclerview
+    implementation ("com.github.sparrow007:carouselrecyclerview:1.2.6")
 }
