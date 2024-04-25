@@ -17,6 +17,7 @@ import com.sedat.movieappv2.util.show
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
@@ -35,6 +36,10 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
         collectFromViewModel()
         search()
 
+        binding.btnClear.setOnClickListener {
+            binding.searchEditText.setText("")
+        }
+
     }
 
     private fun setupCharacterRecyclerView() {
@@ -51,7 +56,16 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
             launch {
                 searchViewModel.movies.collect{
                     searchAdapter.submitList(it.data?.results ?: listOf())
-                    binding.progressBar.hide()
+
+                }
+            }
+
+            launch {
+                searchViewModel.loadingState.collectLatest {
+                    if(it)
+                        binding.progressBar.show()
+                    else
+                        binding.progressBar.hide()
                 }
             }
         }
@@ -63,12 +77,13 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
             job?.cancel()
             job = lifecycleScope.launch {
                 delay(800)
-                binding.progressBar.show()
                 it?.let {
                     if(it.toString().isNotEmpty()){
+                        binding.btnClear.show()
                         searchViewModel.searchMovie(it.toString())
-                    }else
-                        binding.progressBar.hide()
+                    }else {
+                        binding.btnClear.hide()
+                    }
                 } ?: "clearData()"
             }
         }

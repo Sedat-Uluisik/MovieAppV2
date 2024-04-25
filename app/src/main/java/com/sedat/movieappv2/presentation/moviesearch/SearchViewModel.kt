@@ -20,9 +20,14 @@ class SearchViewModel @Inject constructor(
     private var _movies: MutableStateFlow<Resource<Movie>> = MutableStateFlow(Resource.loading(null))
     var movies = _movies.asStateFlow()
 
+    private var _loadingState: MutableStateFlow<Boolean> = MutableStateFlow(false)
+    var loadingState = _loadingState.asStateFlow()
+
     fun searchMovie(query: String) = viewModelScope.launch(Dispatchers.IO) {
+        _loadingState.emit(true)
         searchMovieUseCase.invoke(query).data?.let {
             _movies.emit(Resource.success(it))
+            _loadingState.emit(false)
         }
     }
 }

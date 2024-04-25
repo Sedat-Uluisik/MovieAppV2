@@ -16,6 +16,7 @@ import com.sedat.movieappv2.databinding.FragmentMovieListBinding
 import com.sedat.movieappv2.presentation.movielanguage.LanguageBottomSheetDialogFragment
 import com.sedat.movieappv2.util.hide
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
@@ -38,14 +39,16 @@ class MovieListFragment : Fragment(R.layout.fragment_movie_list) {
         setupCharacterRecyclerView()
         collectFromViewModel()
         itemListeners()
+        movieListViewModel.getLanguage()
     }
 
     private fun itemListeners(){
         binding.imgLanguage.setOnClickListener{
             if(!isRefresh)
-                LanguageBottomSheetDialogFragment{
+                LanguageBottomSheetDialogFragment{selectedLanguage ->
                     isRefresh = true
                     binding.imgLanguage.setImageResource(R.drawable.ic_refresh_30)
+                    binding.txtLanguage.text = selectedLanguage
                 }.show(parentFragmentManager, "LanguageBottomSheetDialogFragment")
             else {
                 movieListViewModel.getMovieList()
@@ -65,6 +68,12 @@ class MovieListFragment : Fragment(R.layout.fragment_movie_list) {
                 movieListViewModel.movieList.collectLatest{
                     movieListAdapter.submitData(it)
                     binding.swipeRefreshLayout.isRefreshing = false
+                }
+            }
+
+            launch {
+                movieListViewModel.language.collectLatest{
+                    binding.txtLanguage.text = it
                 }
             }
         }

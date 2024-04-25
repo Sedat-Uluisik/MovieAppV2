@@ -9,6 +9,7 @@ import com.sedat.movieappv2.data.remote.model.Result
 import com.sedat.movieappv2.domain.usecase.remote.GetLanguages
 import com.sedat.movieappv2.domain.usecase.remote.GetMovieList
 import com.sedat.movieappv2.util.Resource
+import com.sedat.movieappv2.util.SharedPrefsLanguage
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -22,11 +23,15 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MovieListViewModel @Inject constructor(
-    private val getMovieListUseCase: GetMovieList
+    private val getMovieListUseCase: GetMovieList,
+    private val sharedPrefsLanguage: SharedPrefsLanguage
 ): ViewModel() {
 
     private val _movieList = MutableSharedFlow<PagingData<Result>>()
     val movieList = _movieList.asSharedFlow()
+
+    private val _language = MutableStateFlow<String>("")
+    val language = _language.asSharedFlow()
 
     init {
         getMovieList()
@@ -36,6 +41,11 @@ class MovieListViewModel @Inject constructor(
         getMovieListUseCase().onEach {
             _movieList.emit(it)
         }.launchIn(viewModelScope)
+    }
+
+    fun getLanguage() = viewModelScope.launch(Dispatchers.IO){
+        val language = sharedPrefsLanguage.getLanguage()
+        _language.emit(language)
     }
 
 }

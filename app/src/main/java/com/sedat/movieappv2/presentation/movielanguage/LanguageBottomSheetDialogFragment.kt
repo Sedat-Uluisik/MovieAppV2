@@ -14,7 +14,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class LanguageBottomSheetDialogFragment(val isSelect: () -> Unit) : BottomSheetDialogFragment() {
+class LanguageBottomSheetDialogFragment(private val isSelect: (String) -> Unit) : BottomSheetDialogFragment() {
 
     private var _binding: FragmentLanguageBottomSheetDialogBinding ?= null
     private val binding get() = _binding!!
@@ -39,7 +39,7 @@ class LanguageBottomSheetDialogFragment(val isSelect: () -> Unit) : BottomSheetD
 
         adapterLanguage.setOnItemClickListener {
             viewModel.selectLanguage(it)
-            isSelect.invoke()
+            isSelect.invoke(it)
         }
     }
 
