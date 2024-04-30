@@ -21,6 +21,7 @@ class MovieFavouritesViewModel @Inject constructor(
     var movieList = _movieList.asStateFlow()
 
     fun getFavourites() = viewModelScope.launch(Dispatchers.IO) {
-        _movieList.emit(Resource.success(getFavouritesUseCase.invoke(50)))
+        _movieList.emit(Resource.loading(null))
+        _movieList.emit(Resource.success(getFavouritesUseCase.invoke()))
     }
 }

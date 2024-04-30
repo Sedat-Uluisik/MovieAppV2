@@ -22,6 +22,8 @@ class MovieDetailsFragment : Fragment(R.layout.fragment_movie_details), Favourit
     private val viewModel: MovieDetailsViewModel by viewModels()
     private val adapterMovieImages = MovieImagesAdapter()
 
+    private var isFavoriteControl = false
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -69,13 +71,23 @@ class MovieDetailsFragment : Fragment(R.layout.fragment_movie_details), Favourit
             launch {
                 viewModel.isFavorite.collect{
                     binding.isFavorite = it
+                    isFavoriteControl = it
                 }
             }
         }
     }
 
     override fun onFavouriteBtnClick(view: View, movie: Result) {
-        viewModel.saveFavourite(movie)
+        if(isFavoriteControl){
+            viewModel.deleteFavourite(movie.id)
+            binding.isFavorite = false
+            isFavoriteControl = false
+        }
+        else{
+            viewModel.saveFavourite(movie)
+            binding.isFavorite = true
+            isFavoriteControl = true
+        }
     }
 
 }

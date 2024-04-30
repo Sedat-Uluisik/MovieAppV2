@@ -104,6 +104,7 @@ xmlns:tools="http://schemas.android.com/tools">
             android:layout_marginBottom="12dp"
             android:textSize="16sp"
             android:textColor="#E3E3E3"
+            android:gravity="center"
             android:text="@{movie.overview}" />
 
     </LinearLayout>

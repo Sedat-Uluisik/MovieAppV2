@@ -11,8 +11,12 @@ import androidx.paging.PagingData
 import com.sedat.movieappv2.R
 import com.sedat.movieappv2.databinding.FragmentMovieFavouritesBinding
 import com.sedat.movieappv2.presentation.movielist.MovieListFragmentDirections
+import com.sedat.movieappv2.util.Resource
+import com.sedat.movieappv2.util.Status
 import com.sedat.movieappv2.util.hide
+import com.sedat.movieappv2.util.show
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
@@ -53,8 +57,21 @@ class MovieFavouritesFragment : Fragment(R.layout.fragment_movie_favourites) {
     private fun collectFromViewModel(){
         lifecycleScope.launch {
             launch {
-                viewModel.movieList.collect{
-                    adapterFavourites.submitData(PagingData.from(it.data ?: listOf()))
+                viewModel.movieList.collectLatest{
+                    when(it.status){
+                        Status.LOADING ->{
+                            binding.progressBar.show()
+                        }
+                        Status.SUCCESS ->{
+                            adapterFavourites.submitData(PagingData.from(it.data ?: listOf()))
+                            binding.progressBar.hide()
+                            println(it.data?.size)
+                        }
+                        Status.ERROR ->{
+                            adapterFavourites.submitData(PagingData.from(listOf()))
+                            binding.progressBar.hide()
+                        }
+                    }
                 }
             }
         }

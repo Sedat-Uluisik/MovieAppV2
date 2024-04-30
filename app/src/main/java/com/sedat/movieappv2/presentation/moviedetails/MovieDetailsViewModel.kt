@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.sedat.movieappv2.data.remote.model.Result
 import com.sedat.movieappv2.data.remote.model.imagemodel.MovieImages
+import com.sedat.movieappv2.domain.usecase.local.DeleteFavouriteWithId
 import com.sedat.movieappv2.domain.usecase.local.GetFavouriteWithId
 import com.sedat.movieappv2.domain.usecase.local.SaveFavourite
 import com.sedat.movieappv2.domain.usecase.remote.GetMovieImages
@@ -21,7 +22,8 @@ class MovieDetailsViewModel @Inject constructor(
     private val getMovieWithIDUseCase: GetMovieWithID,
     private val getMovieImagesUseCase: GetMovieImages,
     private val saveFavouriteUseCase: SaveFavourite,
-    private val getFavouriteWithIdUseCase: GetFavouriteWithId
+    private val getFavouriteWithIdUseCase: GetFavouriteWithId,
+    private val deleteFavouriteWithIdUseCase: DeleteFavouriteWithId
 ): ViewModel() {
 
     private var _movie: MutableStateFlow<Resource<Result>> = MutableStateFlow(Resource.loading(null))
@@ -47,6 +49,10 @@ class MovieDetailsViewModel @Inject constructor(
 
     fun saveFavourite(result: Result) = viewModelScope.launch(Dispatchers.IO){
         saveFavouriteUseCase.invoke(result.toMovieEntity(isFavorite = true))
+    }
+
+    fun deleteFavourite(movieId: Int) = viewModelScope.launch(Dispatchers.IO){
+        deleteFavouriteWithIdUseCase.invoke(movieId)
     }
 
     fun checkFavorite(movieId: Int) = viewModelScope.launch(Dispatchers.IO) {

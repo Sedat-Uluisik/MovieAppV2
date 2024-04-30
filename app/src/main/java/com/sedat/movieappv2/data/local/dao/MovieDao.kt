@@ -11,8 +11,8 @@ import com.sedat.movieappv2.data.local.entity.MovieEntity
 @Dao
 interface MovieDao {
 
-    @Query("SELECT * FROM FAVOURITES WHERE movieId IN (SELECT movieId FROM FAVOURITES ORDER BY RANDOM() LIMIT :size) AND isFavourite = 1")
-    fun getFavourites(size: Int): List<MovieEntity>
+    @Query("SELECT * FROM FAVOURITES WHERE isFavourite = 1")
+    fun getFavourites(): List<MovieEntity>
 
     @Query("SELECT * FROM FAVOURITES WHERE isFavourite = 0 ORDER BY createdAt, releaseDate DESC")
     fun getMovies(): PagingSource<Int, MovieEntity>

@@ -7,8 +7,8 @@ import com.sedat.movieappv2.domain.repository.MovieRepositoryLocal
 class MovieRepositoryLocalImpl(
     private val db: AppDatabase
 ): MovieRepositoryLocal {
-    override suspend fun getFavourites(size: Int): List<MovieEntity> {
-        return db.movieDao.getFavourites(size)
+    override suspend fun getFavourites(): List<MovieEntity> {
+        return db.movieDao.getFavourites()
     }
 
     override suspend fun saveFavourite(movieEntity: MovieEntity) {

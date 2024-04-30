@@ -9,5 +9,5 @@ import com.sedat.movieappv2.util.Resource
 class GetFavourites(
     private val movieRepositoryLocal: MovieRepositoryLocal
 ) {
-    suspend operator fun invoke(size: Int): List<MovieEntity> = movieRepositoryLocal.getFavourites(size)
+    suspend operator fun invoke(): List<MovieEntity> = movieRepositoryLocal.getFavourites()
 }
