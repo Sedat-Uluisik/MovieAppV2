@@ -7,6 +7,7 @@
 √ Dagger Hilt <br/>
 √ Jetpack Navigation <br/>
 √ MVVM <br/>
+√ Flow <br/>
 √ Coroutines <br/>
 √ Room Database <br/>
 √ Coil <br/>
